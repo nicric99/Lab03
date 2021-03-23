@@ -3,22 +3,123 @@
  */
 
 package it.polito.tdp.spellchecker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+
+import it.polito.tdp.spellchecker.model.Dictionary;
+import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.fxml.FXML;
 
+import java.net.URL;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+
 public class FXMLController {
+private Dictionary model;
+private String language;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+@FXML
+private ResourceBundle resources;
+    @FXML
     private URL location;
+    @FXML
+    private Button btnItalian;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+    private Button btnEnglish;
+
+    
+    @FXML
+    private TextArea txtWords;
+
+    @FXML
+    private TextArea txtResult;
+
+    @FXML
+    private Label lblResult;
+
+    @FXML
+    void doClearText(ActionEvent event) {
+    	txtResult.clear();
+    	txtWords.setEditable(true);
+    	txtWords.clear();
+    	txtResult.setText("Selezionare la lingua");
+    	btnItalian.setDisable(false);
+    	btnEnglish.setDisable(false);
+    	model.clearDictionary();
+
+    }
+    
+    @FXML
+    void doEnglish(ActionEvent event) {
+    	btnItalian.setDisable(true);
+    	language="English";
+    	txtWords.setEditable(true);
+
+    }
+
+    @FXML
+    void doItalian(ActionEvent event) {
+    	btnEnglish.setDisable(true);
+    	language="Italian";
+    	txtWords.setEditable(true);
+
+    }
+
+
+    @FXML
+   void doSpellCheck(ActionEvent event) {
+   String s=txtWords.getText();
+   	String parole[];
+   	List<RichWord> elenco;
+    //s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+   	//s.replaceAll("[$&+,:;=?@#|'<>.-^*()%!]", "");
+    s.toLowerCase();
+    parole=s.split(" ");
+    ArrayList<String> worded= new ArrayList<String>();
+    for(String w:parole) {
+    	worded.add(w);
+    	}
+    model.loadDictionary(language);
+    elenco=(List<RichWord>) model.spellCheckText(worded);
+    txtResult.setText("");
+    boolean flag=false;
+    for(RichWord rs: elenco) {
+    	System.out.println(rs.isCorretto());
+    	if(rs.isCorretto()==false) {
+    		txtResult.appendText(rs.getWord().toString()+"  "+"wrong word"+"\n");
+    		flag=true;
+    	}
+    }
+    if(flag==false) {
+    	txtResult.setText("Parole corrette");
+    }
+    
+    
+
+    }
+
+    @FXML
     void initialize() {
+        assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert lblResult != null : "fx:id=\"lblResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnItalian != null : "fx:id=\"btnItalian\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnEnglish != null : "fx:id=\"btnEnglish\" was not injected: check your FXML file 'Scene.fxml'.";
 
+    }
+    public void setModel(Dictionary model) {
+    	this.model=model;
     }
 }
 
