@@ -6,10 +6,10 @@ package it.polito.tdp.spellchecker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.*;
-
+import javafx.scene.control.ChoiceBox;
 import it.polito.tdp.spellchecker.model.Dictionary;
 import it.polito.tdp.spellchecker.model.RichWord;
 import javafx.fxml.FXML;
@@ -26,17 +26,21 @@ import javafx.scene.control.Label;
 public class FXMLController {
 private Dictionary model;
 private String language;
-
+ObservableList list= FXCollections.observableArrayList();
 
 @FXML
 private ResourceBundle resources;
     @FXML
     private URL location;
+    
     @FXML
     private Button btnItalian;
 
     @FXML
     private Button btnEnglish;
+
+    @FXML
+    private ChoiceBox<String> wdwLanguage;
 
     
     @FXML
@@ -81,8 +85,9 @@ private ResourceBundle resources;
    void doSpellCheck(ActionEvent event) {
    String s=txtWords.getText();
    	String parole[];
+   	language=wdwLanguage.getValue();
    	List<RichWord> elenco;
-    //s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+    s=s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
    	//s.replaceAll("[$&+,:;=?@#|'<>.-^*()%!]", "");
     s.toLowerCase();
     parole=s.split(" ");
@@ -104,18 +109,25 @@ private ResourceBundle resources;
     if(flag==false) {
     	txtResult.setText("Parole corrette");
     }
-    
-    
-
+    }
+    private void loadData() {
+    	list.removeAll();
+    	String a= "English";
+    	String b="Italian";
+    	list.addAll(a,b);
+    	wdwLanguage.getItems().addAll(list);
+    	txtWords.setEditable(true);
     }
 
     @FXML
     void initialize() {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
+        loadData();
         assert lblResult != null : "fx:id=\"lblResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnItalian != null : "fx:id=\"btnItalian\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnEnglish != null : "fx:id=\"btnEnglish\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert wdwLanguage != null : "fx:id=\"wdwLanguage\" was not injected: check your FXML file 'Scene.fxml'.";
 
     }
     public void setModel(Dictionary model) {

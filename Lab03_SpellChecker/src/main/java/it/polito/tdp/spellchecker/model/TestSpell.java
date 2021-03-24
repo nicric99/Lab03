@@ -14,9 +14,10 @@ public class TestSpell {
 	ArrayList<String> parole= new ArrayList<String>();
 	parole.add("a");
 	parole.add("hello");
+	
 	String s="ciao come staa,cs";
-	 //s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
-	System.out.println(s.replaceAll("\"[$&+,:;=?@#|'<>.-^*()%!]\"", ""));
+	s=s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+//	System.out.println(s.replaceAll("\"[$&+,:;=?@#|'<>.-^*()%!]\"", ""));
 	 System.out.println(s);
 	ArrayList<RichWord> words= new ArrayList<RichWord>();
 	System.out.println(dizionario.spellCheckText(parole).toString());

@@ -69,16 +69,16 @@ public class Dictionary {
 		dizionario.clear();
 	}
 	
-/*	public List<RichWord> spellCheckTextLinear(List<String> inputText){
+//	public List<RichWord> spellCheckTextLinear(List<String> inputText){
 		
 		
 		
-	}
-	public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
+//	}
+//	public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
 		
 		
 		
-	}*/
+//	}
 	@Override
 	public String toString() {
 		String s="";
