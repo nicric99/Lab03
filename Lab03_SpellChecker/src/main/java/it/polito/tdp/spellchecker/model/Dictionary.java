@@ -1,5 +1,6 @@
 package it.polito.tdp.spellchecker.model;
 import java.io.BufferedReader;
+import java.lang.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -8,6 +9,7 @@ public class Dictionary {
 	List<String> dizionario;
 	public Dictionary() {
 		this.dizionario=new ArrayList();
+		//this.dizionario=new LinkedList();
 		}
 	
 	public void loadDictionary(String language) {
@@ -69,16 +71,67 @@ public class Dictionary {
 		dizionario.clear();
 	}
 	
-//	public List<RichWord> spellCheckTextLinear(List<String> inputText){
+public List<RichWord> spellCheckTextLinear(List<String> inputText){
+	List<RichWord> parole= new ArrayList<RichWord>();
+	// può essere fatto tranquillamente con il for each per la lineare 
+	// poichè esso parte dall'inizio della lista
+	for(String word:inputText) {
+		boolean flag=false;
+		for(String yy:dizionario) {
+
+		if(yy.equals(word)) {
+			RichWord s= new RichWord(word,true);
+			parole.add(s);
+			flag=true;
+		}
+		}
+		if(flag==false) {
+			RichWord s= new RichWord(word,false);
+			parole.add(s);
+		}
+		}
+	return parole;
+	}
 		
+public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
+	List<RichWord> parole= new ArrayList<RichWord>();
+	for(String word:inputText) {
+		boolean flag=false;
+		int counter= (Integer) (dizionario.size()/2);
+		if(word.equals(dizionario.get(counter))) {
+			RichWord s= new RichWord(word,true);
+			parole.add(s);
+			flag=true;
+		}
+		else {
+			if(word.compareTo(dizionario.get(counter))>0) {
+				for(int i=counter;i>-1;i--) {
+					if(word.equals(dizionario.get(i))){
+						RichWord s= new RichWord(word,true);
+						parole.add(s);
+						flag=true;
+					}
+					}
+				}
+			else {
+				for(int i=counter;i<dizionario.size();i++) {
+					if(word.equals(dizionario.get(i))){
+						RichWord s= new RichWord(word,true);
+						parole.add(s);
+						flag=true;
+				}
+				
+			}
+			}
+		}
+		if(flag==false) {
+			RichWord s= new RichWord(word,false);
+			parole.add(s);
+		}
+	}
+	return parole;
+	}
 		
-		
-//	}
-//	public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
-		
-		
-		
-//	}
 	@Override
 	public String toString() {
 		String s="";

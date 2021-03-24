@@ -19,7 +19,7 @@
                   <Label text="Select Language" />
                   <Button fx:id="btnItalian" mnemonicParsing="false" onAction="#doItalian" text="Italian" />
                   <Button fx:id="btnEnglish" mnemonicParsing="false" onAction="#doEnglish" text="English" />
-                  <ChoiceBox fx:id="wdwLanguage" onDragDetected="#doChoice" prefWidth="150.0" />
+                  <ChoiceBox fx:id="wdwLanguage" accessibleText="Language" prefWidth="150.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">

@@ -20,7 +20,7 @@ public class TestSpell {
 //	System.out.println(s.replaceAll("\"[$&+,:;=?@#|'<>.-^*()%!]\"", ""));
 	 System.out.println(s);
 	ArrayList<RichWord> words= new ArrayList<RichWord>();
-	System.out.println(dizionario.spellCheckText(parole).toString());
+	System.out.println(dizionario.spellCheckTextDichotomic(parole).toString());
 	//System.out.println(d.toString());
 	
 //	/*System.out.println(dizionario.toString());
