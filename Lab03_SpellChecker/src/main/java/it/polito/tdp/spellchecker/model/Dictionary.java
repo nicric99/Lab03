@@ -8,8 +8,8 @@ public class Dictionary {
 
 	List<String> dizionario;
 	public Dictionary() {
-		this.dizionario=new ArrayList();
-		//this.dizionario=new LinkedList();
+//		this.dizionario=new ArrayList();
+		this.dizionario=new LinkedList();
 		}
 	
 	public void loadDictionary(String language) {
@@ -105,7 +105,7 @@ public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
 		}
 		else {
 			if(word.compareTo(dizionario.get(counter))>0) {
-				for(int i=counter;i>-1;i--) {
+				for(int i=counter;i<dizionario.size();i++) {
 					if(word.equals(dizionario.get(i))){
 						RichWord s= new RichWord(word,true);
 						parole.add(s);
@@ -114,7 +114,7 @@ public List<RichWord> spellCheckTextDichotomic(List<String> inputText){
 					}
 				}
 			else {
-				for(int i=counter;i<dizionario.size();i++) {
+				for(int i=counter;i>-1;i--) {
 					if(word.equals(dizionario.get(i))){
 						RichWord s= new RichWord(word,true);
 						parole.add(s);

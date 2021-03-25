@@ -96,9 +96,12 @@ private ResourceBundle resources;
     	worded.add(w);
     	}
     model.loadDictionary(language);
+    long startTime = System.nanoTime();
 //   elenco=(List<RichWord>) model.spellCheckText(worded);
 //   elenco=(List<RichWord>) model.spellCheckTextLinear(worded);
-elenco=(List<RichWord>) model.spellCheckTextDichotomic(worded);
+   elenco=(List<RichWord>) model.spellCheckTextDichotomic(worded);
+    long endTime=System.nanoTime();
+    System.out.println(endTime-startTime);
     txtResult.setText("");
     boolean flag=false;
     for(RichWord rs: elenco) {
@@ -111,6 +114,7 @@ elenco=(List<RichWord>) model.spellCheckTextDichotomic(worded);
     if(flag==false) {
     	txtResult.setText("Parole corrette");
     }
+    model.clearDictionary();
     }
     private void loadData() {
     	list.removeAll();
