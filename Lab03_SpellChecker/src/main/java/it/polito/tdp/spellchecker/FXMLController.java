@@ -33,11 +33,6 @@ private ResourceBundle resources;
     @FXML
     private URL location;
     
-    @FXML
-    private Button btnItalian;
-
-    @FXML
-    private Button btnEnglish;
 
     @FXML
     private ChoiceBox<String> wdwLanguage;
@@ -58,34 +53,24 @@ private ResourceBundle resources;
     	txtWords.setEditable(true);
     	txtWords.clear();
     	txtResult.setText("Selezionare la lingua");
-    	btnItalian.setDisable(false);
-    	btnEnglish.setDisable(false);
     	model.clearDictionary();
 
     }
-    
-    @FXML
-    void doEnglish(ActionEvent event) {
-    	btnItalian.setDisable(true);
-    	language="English";
-    	txtWords.setEditable(true);
 
-    }
-
-    @FXML
-    void doItalian(ActionEvent event) {
-    	btnEnglish.setDisable(true);
-    	language="Italian";
-    	txtWords.setEditable(true);
-
-    }
 
 
     @FXML
    void doSpellCheck(ActionEvent event) {
-   String s=txtWords.getText();
-   	String parole[];
+    	String s;
+   	try {
    	language=wdwLanguage.getValue();
+   	s=txtWords.getText();
+   	}catch(NullPointerException npe) {
+   		txtWords.setEditable(false);
+   		txtResult.setText("Selezionare una lingua prima di procedere ");
+   		return;
+   	}
+   	String parole[];
    	List<RichWord> elenco;
     s=s.replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
    	//s.replaceAll("[$&+,:;=?@#|'<>.-^*()%!]", "");
@@ -96,15 +81,18 @@ private ResourceBundle resources;
     	worded.add(w);
     	}
     model.loadDictionary(language);
-    long startTime = System.nanoTime();
-//   elenco=(List<RichWord>) model.spellCheckText(worded);
-//   elenco=(List<RichWord>) model.spellCheckTextLinear(worded);
-   elenco=(List<RichWord>) model.spellCheckTextDichotomic(worded);
-    long endTime=System.nanoTime();
+    ArrayList<RichWord> elenco1= new ArrayList<RichWord>();
+    //long startTime = System.nanoTime();
+    long startTime= System.currentTimeMillis();
+  elenco1=(ArrayList<RichWord>) model.spellCheckText(worded);
+//  elenco1=(ArrayList<RichWord>) model.spellCheckTextLinear(worded);
+//    elenco1=(ArrayList<RichWord>) model.spellCheckTextDichotomic(worded);
+    //long endTime=System.nanoTime();
+    long endTime=System.currentTimeMillis();
     System.out.println(endTime-startTime);
     txtResult.setText("");
     boolean flag=false;
-    for(RichWord rs: elenco) {
+    for(RichWord rs: elenco1) {
     	System.out.println(rs.isCorretto());
     	if(rs.isCorretto()==false) {
     		txtResult.appendText(rs.getWord().toString()+"  "+"wrong word"+"\n");
@@ -114,7 +102,7 @@ private ResourceBundle resources;
     if(flag==false) {
     	txtResult.setText("Parole corrette");
     }
-    model.clearDictionary();
+   model.clearDictionary();
     }
     private void loadData() {
     	list.removeAll();
@@ -131,8 +119,6 @@ private ResourceBundle resources;
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         loadData();
         assert lblResult != null : "fx:id=\"lblResult\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnItalian != null : "fx:id=\"btnItalian\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnEnglish != null : "fx:id=\"btnEnglish\" was not injected: check your FXML file 'Scene.fxml'.";
         assert wdwLanguage != null : "fx:id=\"wdwLanguage\" was not injected: check your FXML file 'Scene.fxml'.";
 
     }
