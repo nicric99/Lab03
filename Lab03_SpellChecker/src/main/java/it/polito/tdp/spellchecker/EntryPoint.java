@@ -16,6 +16,7 @@ public class EntryPoint extends Application {
     public void start(Stage stage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
     	Parent root= loader.load();
+//    	/fxml/Scene.fxml
         FXMLController controller= loader.getController();
         
         Dictionary model= new Dictionary();
